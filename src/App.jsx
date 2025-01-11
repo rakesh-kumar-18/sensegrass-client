@@ -1,12 +1,12 @@
-import './App.css'
+import { SignupProvider } from "./context/SignupContext";
+import SignupPage from "./pages/SignupPage";
 
-function App() {
-
+const App = () => {
   return (
-    <>
-      
-    </>
-  )
-}
+    <SignupProvider>
+      <SignupPage />
+    </SignupProvider>
+  );
+};
 
-export default App
+export default App;
