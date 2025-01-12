@@ -1,19 +1,19 @@
 import AuthImage from "../assets/auth-image.png";
-import SignupForm from "../components/SignupForm";
+import LoginForm from "../components/LoginForm";
 
-const SignupPage = () => {
+const LoginPage = () => {
     return (
         <div className="min-h-screen flex">
             <div className="w-full md:w-1/2 flex flex-col justify-center items-center bg-white px-6">
-                <h2 className="text-2xl font-bold mb-6">Get Started Now</h2>
-                <SignupForm />
+                <h2 className="text-2xl font-bold mb-6">Welcome back!</h2>
+                <LoginForm />
                 <div className="mt-6 text-center text-gray-500">
                     Or
                 </div>
                 <p className="mt-6 text-sm text-gray-500">
-                    Have an account?{" "}
-                    <a href="/" className="text-green-600 hover:underline">
-                        Sign in
+                    Don’t have an account?{" "}
+                    <a href="/signup" className="text-green-600 hover:underline">
+                        Sign Up
                     </a>
                 </p>
             </div>
@@ -25,4 +25,4 @@ const SignupPage = () => {
     );
 };
 
-export default SignupPage;
+export default LoginPage;
