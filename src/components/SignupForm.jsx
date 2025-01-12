@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import FormInput from "./FormInput";
 
 const SignupForm = () => {
     const { signup, login, loading, error } = useAuth();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -41,6 +43,7 @@ const SignupForm = () => {
         }
         await signup(formData);
         await login(formData.email, formData.password);
+        navigate("/dashboard");
     };
 
     return (

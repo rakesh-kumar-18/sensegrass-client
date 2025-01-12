@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import FormInput from "./FormInput";
 
 const LoginForm = () => {
     const { login, loading, error } = useAuth();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
 
@@ -29,6 +31,7 @@ const LoginForm = () => {
             return;
         }
         await login(formData.email, formData.password);
+        navigate("/dashboard");
     };
 
     return (
