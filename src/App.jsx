@@ -1,12 +1,12 @@
-import { SignupProvider } from "./context/SignupContext";
+import { AuthProvider } from "./context/AuthContext";
 import SignupPage from "./pages/SignupPage";
 
-const App = () => {
-  return (
-    <SignupProvider>
+const App = () => (
+  <AuthProvider>
+    <div>
       <SignupPage />
-    </SignupProvider>
-  );
-};
+    </div>
+  </AuthProvider>
+);
 
 export default App;

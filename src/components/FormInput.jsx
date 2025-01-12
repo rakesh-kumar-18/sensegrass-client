@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-const FormInput = ({ label, type, name, value, onChange }) => {
+const FormInput = ({ label, type, name, value, onChange, placeholder }) => {
     return (
         <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700">{label}</label>
@@ -8,9 +8,9 @@ const FormInput = ({ label, type, name, value, onChange }) => {
                 type={type}
                 name={name}
                 value={value}
-                onChange={(e) => onChange(name, e.target.value)}
+                onChange={onChange}
                 className="mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
-                placeholder={`Enter your ${label.toLowerCase()}`}
+                placeholder={placeholder || `Enter your ${label.toLowerCase()}`}
             />
         </div>
     );
