@@ -2,7 +2,7 @@
 
 const FormInput = ({ label, type, name, value, onChange, placeholder }) => {
     return (
-        <div className="mb-4">
+        <div>
             <label className="block text-sm font-medium text-gray-700">{label}</label>
             <input
                 type={type}
