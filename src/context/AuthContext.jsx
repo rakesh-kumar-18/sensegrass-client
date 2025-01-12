@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 const AuthContext = createContext();
 
@@ -16,11 +16,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post(
-                "http://localhost:5000/api/login",
-                { email, password },
-                { withCredentials: true }
-            );
+            const response = await api.post("/login", { email, password }, { withCredentials: true });
             setUser(response.data.loggedInUser);
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
@@ -34,11 +30,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.post(
-                "http://localhost:5000/api/register",
-                data,
-                { withCredentials: true }
-            );
+            const response = await api.post("/register", data, { withCredentials: true });
             setUser(response.data);
         } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
@@ -52,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            await axios.post("http://localhost:5000/api/logout", {}, { withCredentials: true });
+            await api.post("/logout", {}, { withCredentials: true });
             setUser(null);
         } catch (err) {
             setError(err.response?.data?.message || "Logout failed");
