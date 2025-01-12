@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await api.post("/login", { email, password }, { withCredentials: true });
+            const response = await api.post("/users/login", { email, password }, { withCredentials: true });
             setUser(response.data.loggedInUser);
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await api.post("/register", data, { withCredentials: true });
+            const response = await api.post("/users/register", data, { withCredentials: true });
             setUser(response.data);
         } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            await api.post("/logout", {}, { withCredentials: true });
+            await api.post("/users/logout", {}, { withCredentials: true });
             setUser(null);
         } catch (err) {
             setError(err.response?.data?.message || "Logout failed");
