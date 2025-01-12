@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import FormInput from "./FormInput";
 
 const SignupForm = () => {
-    const { signup, loading, error } = useAuth();
+    const { signup, login, loading, error } = useAuth();
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -40,6 +40,7 @@ const SignupForm = () => {
             return;
         }
         await signup(formData);
+        await login(formData.email, formData.password);
     };
 
     return (
