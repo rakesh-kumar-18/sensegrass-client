@@ -11,10 +11,13 @@ export const FieldProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [isAddEditModalOpen, setAddEditModalOpen] = useState(false);
+    const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+    const [selectedField, setSelectedField] = useState(null);
+
     // Fetch all fields
     const fetchFields = async () => {
         setLoading(true);
-        setError(null);
         try {
             const response = await api.get("/fields");
             setFields(response.data);
@@ -28,7 +31,6 @@ export const FieldProvider = ({ children }) => {
     // Add a new field
     const addField = async (fieldData) => {
         setLoading(true);
-        setError(null);
         try {
             const response = await api.post("/fields", fieldData);
             setFields((prevFields) => [...prevFields, response.data]);
@@ -42,11 +44,10 @@ export const FieldProvider = ({ children }) => {
     // Update an existing field
     const updateField = async (id, updatedData) => {
         setLoading(true);
-        setError(null);
         try {
             const response = await api.put(`/fields/${id}`, updatedData);
             setFields((prevFields) =>
-                prevFields.map((field) => (field._id === id ? response.data : field))
+                prevFields.map((field) => (field.id === id ? response.data : field))
             );
         } catch (err) {
             setError(err.response?.data?.message || "Failed to update field");
@@ -58,10 +59,9 @@ export const FieldProvider = ({ children }) => {
     // Delete a field
     const deleteField = async (id) => {
         setLoading(true);
-        setError(null);
         try {
             await api.delete(`/fields/${id}`);
-            setFields((prevFields) => prevFields.filter((field) => field._id !== id));
+            setFields((prevFields) => prevFields.filter((field) => field.id !== id));
         } catch (err) {
             setError(err.response?.data?.message || "Failed to delete field");
         } finally {
@@ -69,12 +69,40 @@ export const FieldProvider = ({ children }) => {
         }
     };
 
+    // Open Add/Edit Modal
+    const openAddEditModal = (field = null) => {
+        setSelectedField(field);
+        setAddEditModalOpen(true);
+    };
+
+    // Open Delete Confirmation Modal
+    const openConfirmationModal = (field) => {
+        setSelectedField(field);
+        setConfirmationModalOpen(true);
+    };
+
     useEffect(() => {
         fetchFields();
     }, []);
 
     return (
-        <FieldContext.Provider value={{ fields, addField, updateField, deleteField, loading, error }}>
+        <FieldContext.Provider
+            value={{
+                fields,
+                loading,
+                error,
+                addField,
+                updateField,
+                deleteField,
+                isAddEditModalOpen,
+                setAddEditModalOpen,
+                isConfirmationModalOpen,
+                setConfirmationModalOpen,
+                selectedField,
+                openAddEditModal,
+                openConfirmationModal,
+            }}
+        >
             {children}
         </FieldContext.Provider>
     );
