@@ -32,7 +32,7 @@ export const FieldProvider = ({ children }) => {
     const addField = async (fieldData) => {
         setLoading(true);
         try {
-            const response = await api.post("/fields", fieldData);
+            const response = await api.post("/fields/add", fieldData);
             setFields((prevFields) => [...prevFields, response.data]);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to add field");
@@ -45,7 +45,7 @@ export const FieldProvider = ({ children }) => {
     const updateField = async (id, updatedData) => {
         setLoading(true);
         try {
-            const response = await api.put(`/fields/${id}`, updatedData);
+            const response = await api.put(`/fields/update/${id}`, updatedData);
             setFields((prevFields) =>
                 prevFields.map((field) => (field.id === id ? response.data : field))
             );
@@ -60,7 +60,7 @@ export const FieldProvider = ({ children }) => {
     const deleteField = async (id) => {
         setLoading(true);
         try {
-            await api.delete(`/fields/${id}`);
+            await api.delete(`/fields/delete/${id}`);
             setFields((prevFields) => prevFields.filter((field) => field.id !== id));
         } catch (err) {
             setError(err.response?.data?.message || "Failed to delete field");

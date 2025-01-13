@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useField } from "../context/FieldContext";
 import { useAuth } from "../context/AuthContext";
 import FieldTable from "../components/FieldTable";
@@ -7,36 +8,51 @@ import ConfirmationModal from "../components/ConfirmationModal";
 const FarmerDashboard = () => {
     const { openAddEditModal } = useField();
     const { user, logout } = useAuth();
+    const [isProfileCardOpen, setProfileCardOpen] = useState(false);
+
+    const toggleProfileCard = () => {
+        setProfileCardOpen((prev) => !prev);
+    };
+
+    const closeProfileCard = () => {
+        setProfileCardOpen(false);
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header Section */}
             <header className="bg-white shadow-md p-4 flex justify-between items-center">
                 <h1 className="text-xl font-bold text-gray-700">Farmer Dashboard</h1>
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-4 relative">
                     <button
                         className="text-green-600 font-medium hover:underline"
                         onClick={() => (window.location.href = "/pricing")}
                     >
                         Pricing
                     </button>
-                    <div className="relative group">
-                        <div className="flex items-center cursor-pointer">
+                    <div>
+                        <button
+                            onClick={toggleProfileCard}
+                            className="flex items-center cursor-pointer"
+                        >
                             <span className="bg-green-600 text-white w-8 h-8 flex items-center justify-center rounded-full">
-                                S
+                                {user.username.charAt(0).toUpperCase()}
                             </span>
-                            <span className="ml-2 text-gray-700">{user.email}</span>
-                        </div>
-                        <div className="absolute hidden group-hover:block right-0 mt-2 bg-white shadow-lg rounded-lg p-4">
-                            <p className="text-sm text-gray-700">{user.email}</p>
-                            <p className="text-sm text-gray-500">Role: {user.role}</p>
-                            <button
-                                onClick={logout}
-                                className="w-full mt-2 text-white bg-red-500 py-2 px-4 rounded-md hover:bg-red-600"
-                            >
-                                Logout
-                            </button>
-                        </div>
+                        </button>
+
+                        {/* Profile Card */}
+                        {isProfileCardOpen && (
+                            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-4 z-10">
+                                <p className="text-sm text-gray-700">{user.email}</p>
+                                <p className="text-sm text-gray-500">Role: {user.role}</p>
+                                <button
+                                    onClick={logout}
+                                    className="w-full mt-2 text-white bg-red-500 py-2 px-4 rounded-md hover:bg-red-600"
+                                >
+                                    Logout
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </header>
@@ -58,6 +74,13 @@ const FarmerDashboard = () => {
             {/* Modals */}
             <AddEditFieldModal />
             <ConfirmationModal />
+
+            {isProfileCardOpen && (
+                <div
+                    className="fixed inset-0 bg-transparent"
+                    onClick={closeProfileCard}
+                />
+            )}
         </div>
     );
 };
