@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         setError(null);
         try {
             const response = await api.post("/users/login", { email, password }, { withCredentials: true });
-            setUser(response.data.loggedInUser);
+            setUser(response.data.data.loggedInUser);
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
         } finally {
