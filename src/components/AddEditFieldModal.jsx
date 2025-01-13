@@ -15,7 +15,7 @@ const AddEditFieldModal = () => {
         fieldName: "",
         location: "",
         cropType: "",
-        area: "",
+        areaSize: "",
     });
 
     useEffect(() => {
@@ -24,14 +24,14 @@ const AddEditFieldModal = () => {
                 fieldName: selectedField.fieldName,
                 location: selectedField.location,
                 cropType: selectedField.cropType,
-                area: selectedField.area,
+                areaSize: selectedField.areaSize,
             });
         } else {
             setFormData({
                 fieldName: "",
                 location: "",
                 cropType: "",
-                area: "",
+                areaSize: "",
             });
         }
     }, [selectedField]);
@@ -97,8 +97,8 @@ const AddEditFieldModal = () => {
                         <label className="block text-sm font-medium">Area</label>
                         <input
                             type="text"
-                            name="area"
-                            value={formData.area}
+                            name="areaSize"
+                            value={formData.areaSize}
                             onChange={handleChange}
                             className="w-full px-4 py-2 border rounded-md"
                             required
