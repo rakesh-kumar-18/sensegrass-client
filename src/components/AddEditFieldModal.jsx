@@ -49,6 +49,12 @@ const AddEditFieldModal = () => {
             await addField(formData);
         }
         setAddEditModalOpen(false);
+        setFormData({
+            fieldName: "",
+            location: "",
+            cropType: "",
+            areaSize: "",
+        });
     };
 
     if (!isAddEditModalOpen) return null;
@@ -96,7 +102,7 @@ const AddEditFieldModal = () => {
                     <div className="mb-4">
                         <label className="block text-sm font-medium">Area</label>
                         <input
-                            type="text"
+                            type="number"
                             name="areaSize"
                             value={formData.areaSize}
                             onChange={handleChange}

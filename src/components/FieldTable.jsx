@@ -1,13 +1,12 @@
 import { useField } from "../context/FieldContext";
 
 const FieldTable = () => {
-    const { fields, openAddEditModal, openConfirmationModal, loading, error } = useField();
+    const { fields, openAddEditModal, openConfirmationModal, loading } = useField();
 
     return (
         <div className="bg-white shadow-md rounded-lg p-6">
             <h2 className="text-lg font-bold mb-4">Fields</h2>
             {loading && <p className="text-gray-500">Loading fields...</p>}
-            {error && <p className="text-red-500">{error}</p>}
             {fields.length === 0 && !loading ? (
                 <p className="text-gray-500">No fields available. Add a new field to get started.</p>
             ) : (
