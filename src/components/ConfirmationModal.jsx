@@ -10,7 +10,7 @@ const ConfirmationModal = () => {
     } = useField();
 
     const handleConfirm = async () => {
-        await deleteField(selectedField.id);
+        await deleteField(selectedField._id);
         setConfirmationModalOpen(false);
     };
 

@@ -20,7 +20,7 @@ export const FieldProvider = ({ children }) => {
         setLoading(true);
         try {
             const response = await api.get("/fields");
-            setFields(response.data);
+            setFields(response.data.data);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to fetch fields");
         } finally {
@@ -33,7 +33,7 @@ export const FieldProvider = ({ children }) => {
         setLoading(true);
         try {
             const response = await api.post("/fields/add", fieldData);
-            setFields((prevFields) => [...prevFields, response.data]);
+            setFields((prevFields) => [...prevFields, response.data.data]);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to add field");
         } finally {
@@ -47,7 +47,7 @@ export const FieldProvider = ({ children }) => {
         try {
             const response = await api.put(`/fields/update/${id}`, updatedData);
             setFields((prevFields) =>
-                prevFields.map((field) => (field.id === id ? response.data : field))
+                prevFields.map((field) => (field._id === id ? response.data.data : field))
             );
         } catch (err) {
             setError(err.response?.data?.message || "Failed to update field");
@@ -61,7 +61,7 @@ export const FieldProvider = ({ children }) => {
         setLoading(true);
         try {
             await api.delete(`/fields/delete/${id}`);
-            setFields((prevFields) => prevFields.filter((field) => field.id !== id));
+            setFields((prevFields) => prevFields.filter((field) => field._id !== id));
         } catch (err) {
             setError(err.response?.data?.message || "Failed to delete field");
         } finally {

@@ -14,7 +14,6 @@ const FieldTable = () => {
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr>
-                            <th className="border-b py-2 px-4">ID</th>
                             <th className="border-b py-2 px-4">Field Name</th>
                             <th className="border-b py-2 px-4">Location</th>
                             <th className="border-b py-2 px-4">Crop Type</th>
@@ -24,12 +23,11 @@ const FieldTable = () => {
                     </thead>
                     <tbody>
                         {fields.map((field) => (
-                            <tr key={field.id}>
-                                <td className="py-2 px-4">{field.id}</td>
+                            <tr key={field._id}>
                                 <td className="py-2 px-4">{field.fieldName}</td>
                                 <td className="py-2 px-4">{field.location}</td>
                                 <td className="py-2 px-4">{field.cropType}</td>
-                                <td className="py-2 px-4">{field.area}</td>
+                                <td className="py-2 px-4">{field.areaSize}</td>
                                 <td className="py-2 px-4 flex space-x-2">
                                     <button
                                         onClick={() => openAddEditModal(field)}

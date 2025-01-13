@@ -44,7 +44,7 @@ const AddEditFieldModal = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (selectedField) {
-            await updateField(selectedField.id, formData);
+            await updateField(selectedField._id, formData);
         } else {
             await addField(formData);
         }
