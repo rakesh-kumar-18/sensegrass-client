@@ -8,25 +8,54 @@ export const useField = () => useContext(FieldContext);
 
 export const FieldProvider = ({ children }) => {
     const [fields, setFields] = useState([]);
+    const [allFields, setAllFields] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [perPage] = useState(10);
+    const [totalFields, setTotalFields] = useState(0);
 
     const [isAddEditModalOpen, setAddEditModalOpen] = useState(false);
     const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
     const [selectedField, setSelectedField] = useState(null);
 
-    // Fetch all fields
-    const fetchFields = async () => {
+    // Fetch fields by farmer
+    const fetchFields = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await api.get("/fields");
-            setFields(response.data.data);
+            const response = await api.get(`/fields?page=${page}&limit=${perPage}`);
+            setFields(response.data.fields);
+            setTotalFields(response.data.totalFields);
+            setTotalPages(response.data.totalPages);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to fetch fields");
         } finally {
             setLoading(false);
         }
     };
+
+    // Fetch all fields
+    const fetchAllFields = async (page = 1) => {
+        setLoading(true);
+        try {
+            const response = await api.get(`/fields/all?page=${page}&limit=${perPage}`);
+            setAllFields(response.data.fields);
+            setTotalFields(response.data.totalFields);
+            setTotalPages(response.data.totalPages);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to fetch fields");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchFields(currentPage);
+        fetchAllFields(currentPage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage]);
 
     // Add a new field
     const addField = async (fieldData) => {
@@ -81,16 +110,17 @@ export const FieldProvider = ({ children }) => {
         setConfirmationModalOpen(true);
     };
 
-    useEffect(() => {
-        fetchFields();
-    }, []);
-
     return (
         <FieldContext.Provider
             value={{
                 fields,
+                allFields,
+                totalFields,
                 loading,
                 error,
+                currentPage,
+                totalPages,
+                setCurrentPage,
                 addField,
                 updateField,
                 deleteField,
