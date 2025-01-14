@@ -14,21 +14,21 @@ const FieldTable = () => {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr>
-                                <th className="border-b py-2 px-4">Field Name</th>
-                                <th className="border-b py-2 px-4">Location</th>
-                                <th className="border-b py-2 px-4">Crop Type</th>
-                                <th className="border-b py-2 px-4">Area</th>
-                                <th className="border-b py-2 px-4">Actions</th>
+                                <th className="border-b p-2 text-left">Field Name</th>
+                                <th className="border-b p-2 text-left">Location</th>
+                                <th className="border-b p-2 text-left">Crop Type</th>
+                                <th className="border-b p-2 text-left">Area</th>
+                                <th className="border-b p-2 text-left">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {fields.map((field) => (
                                 <tr key={field._id} className="hover:bg-gray-50">
-                                    <td className="py-2 px-4">{field.fieldName}</td>
-                                    <td className="py-2 px-4">{field.location}</td>
-                                    <td className="py-2 px-4">{field.cropType}</td>
-                                    <td className="py-2 px-4">{field.areaSize}</td>
-                                    <td className="py-2 px-4 flex flex-wrap space-x-2">
+                                    <td className="border-b p-2 text-left">{field.fieldName}</td>
+                                    <td className="border-b p-2 text-left">{field.location}</td>
+                                    <td className="border-b p-2 text-left">{field.cropType}</td>
+                                    <td className="border-b p-2 text-left">{field.areaSize}</td>
+                                    <td className="border-b p-2 text-left flex flex-wrap space-x-2">
                                         <button
                                             onClick={() => openAddEditModal(field)}
                                             className="bg-blue-500 text-white py-1 px-3 rounded-md hover:bg-blue-600"
