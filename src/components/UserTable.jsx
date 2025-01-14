@@ -1,59 +1,60 @@
-import { useEffect, useState } from "react";
-import api from "../api/api";
+import { useAuth } from "../context/AuthContext";
 
 const UsersTable = () => {
-    const [users, setUsers] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const { data } = await api.get(`/admin/users?page=${currentPage}`);
-                setUsers(data.users);
-            } catch (error) {
-                console.error("Failed to fetch users:", error);
-            }
-        };
-        fetchUsers();
-    }, [currentPage]);
+    const { users, usersLoading, currentPage, totalPages, setCurrentPage } = useAuth();
 
     return (
         <div className="bg-white shadow-md p-6 rounded-lg">
-            <h2 className="text-lg font-bold mb-4">Users</h2>
-            <table className="w-full border-collapse">
-                <thead>
-                    <tr>
-                        <th className="border-b p-2">ID</th>
-                        <th className="border-b p-2">Name</th>
-                        <th className="border-b p-2">Email</th>
-                        <th className="border-b p-2">Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {users.map((user) => (
-                        <tr key={user.id}>
-                            <td className="p-2">{user.id}</td>
-                            <td className="p-2">{user.name}</td>
-                            <td className="p-2">{user.email}</td>
-                            <td className="p-2">{user.role}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <div className="flex justify-end mt-4">
-                <button
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    className="mr-2 bg-gray-300 px-3 py-1 rounded-md"
-                >
-                    Previous
-                </button>
-                <button
-                    onClick={() => setCurrentPage((prev) => prev + 1)}
-                    className="bg-gray-300 px-3 py-1 rounded-md"
-                >
-                    Next
-                </button>
-            </div>
+            <h2 className="text-lg font-bold mb-4">Farmers</h2>
+            {usersLoading ? (
+                <p className="text-gray-500">Loading...</p>
+            ) : (
+                <>
+                    {users.length === 0 ? (
+                        <p className="text-gray-500">No users found.</p>
+                    ) : (
+                        <table className="w-full border-collapse">
+                            <thead>
+                                <tr>
+                                    <th className="border-b p-2">Name</th>
+                                    <th className="border-b p-2">Email</th>
+                                    <th className="border-b p-2">Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {users.map((user) => (
+                                    <tr key={user._id}>
+                                        <td className="p-2">{user.username}</td>
+                                        <td className="p-2">{user.email}</td>
+                                        <td className="p-2">{user.role}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+
+                    {/* Pagination */}
+                    <div className="flex justify-between items-center mt-4">
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                            className="mr-2 bg-gray-300 px-3 py-1 rounded-md disabled:opacity-50"
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        <p className="text-gray-700">
+                            Page {currentPage} of {totalPages}
+                        </p>
+                        <button
+                            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                            className="bg-gray-300 px-3 py-1 rounded-md disabled:opacity-50"
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import api from "../api/api";
 
 const AuthContext = createContext();
@@ -10,6 +10,11 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    const [users, setUsers] = useState([]);
+    const [usersLoading, setUsersLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     // Login function
     const login = async (email, password) => {
@@ -53,8 +58,41 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Fetch all farmers with pagination
+    const fetchFarmers = async (page = 1) => {
+        setUsersLoading(true);
+        try {
+            const { data } = await api.get(`/users/farmers?page=${page}`);
+            setUsers(data.farmers);
+            setCurrentPage(data.currentPage);
+            setTotalPages(data.totalPages);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to fetch farmers");
+        } finally {
+            setUsersLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchFarmers(currentPage);
+    }, [currentPage]);
+
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout, loading, error }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                login,
+                signup,
+                logout,
+                loading,
+                error,
+                users,
+                usersLoading,
+                currentPage,
+                totalPages,
+                setCurrentPage,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

@@ -2,7 +2,7 @@
 const Sidebar = ({ activeTab, setActiveTab }) => {
     const tabs = [
         { name: "Dashboard", key: "dashboard" },
-        { name: "Users", key: "users" },
+        { name: "Farmers", key: "users" },
         { name: "Fields", key: "fields" },
         { name: "Transactions", key: "transactions" },
     ];
