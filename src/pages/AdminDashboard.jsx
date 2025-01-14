@@ -9,15 +9,12 @@ import TransactionsTable from "../components/TransactionsTable";
 const AdminDashboard = () => {
     const { user, logout } = useAuth();
     const [activeTab, setActiveTab] = useState("dashboard");
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [isProfileCardOpen, setProfileCardOpen] = useState(false);
 
-    const toggleProfileCard = () => {
-        setProfileCardOpen((prev) => !prev);
-    };
-
-    const closeProfileCard = () => {
-        setProfileCardOpen(false);
-    };
+    const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+    const toggleProfileCard = () => setProfileCardOpen((prev) => !prev);
+    const closeProfileCard = () => setProfileCardOpen(false);
 
     const renderContent = () => {
         switch (activeTab) {
@@ -35,15 +32,39 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="flex min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 flex">
             {/* Sidebar */}
-            <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+            <Sidebar
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+                isSidebarOpen={isSidebarOpen}
+                toggleSidebar={toggleSidebar}
+            />
+
+            {/* Overlay for Sidebar on small screens */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    onClick={toggleSidebar}
+                />
+            )}
 
             {/* Main Content */}
-            <div className="flex-1">
+            <div className="flex-1 md:ml-64">
                 <header className="bg-white shadow-md p-4 flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-gray-700">Admin Dashboard</h1>
-                    <div className="relative group">
+                    <div className="flex items-center space-x-4">
+                        {/* Hamburger for small screens */}
+                        <button
+                            onClick={toggleSidebar}
+                            className="text-gray-600 md:hidden"
+                        >
+                            ☰
+                        </button>
+                        <h1 className="text-xl font-bold text-gray-700 md:hidden">
+                            Sensegrass
+                        </h1>
+                    </div>
+                    <div className="relative">
                         <button
                             onClick={toggleProfileCard}
                             className="flex items-center cursor-pointer"
@@ -52,7 +73,6 @@ const AdminDashboard = () => {
                                 {user.username.charAt(0).toUpperCase()}
                             </span>
                         </button>
-                        {/* Profile Card */}
                         {isProfileCardOpen && (
                             <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg p-4 z-10">
                                 <p className="text-sm text-gray-700">{user.email}</p>
@@ -69,7 +89,7 @@ const AdminDashboard = () => {
                 </header>
                 <main className="p-6">{renderContent()}</main>
             </div>
-
+            
             {isProfileCardOpen && (
                 <div
                     className="fixed inset-0 bg-transparent"

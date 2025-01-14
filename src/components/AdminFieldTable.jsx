@@ -14,30 +14,32 @@ const FieldsTable = () => {
                     {allFields.length === 0 ? (
                         <p className="text-gray-500">No fields available.</p>
                     ) : (
-                        <table className="w-full border-collapse">
-                            <thead>
-                                <tr>
-                                    <th className="border-b p-2 text-left">Field Name</th>
-                                    <th className="border-b p-2 text-left">Location</th>
-                                    <th className="border-b p-2 text-left">Crop Type</th>
-                                    <th className="border-b p-2 text-left">Area Size</th>
-                                    <th className="border-b p-2 text-left">Farmer</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {allFields.map((field) => (
-                                    <tr key={field._id}>
-                                        <td className="p-2 border-b text-left">{field.fieldName}</td>
-                                        <td className="p-2 border-b text-left">{field.location}</td>
-                                        <td className="p-2 border-b text-left">{field.cropType}</td>
-                                        <td className="p-2 border-b text-left">
-                                            {field.areaSize} acres
-                                        </td>
-                                        <td className="p-2 border-b text-left">{field.farmerId.username}</td>
+                        <div className="overflow-x-auto">
+                            <table className="w-full border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th className="border-b p-2 text-left">Field Name</th>
+                                        <th className="border-b p-2 text-left">Location</th>
+                                        <th className="border-b p-2 text-left">Crop Type</th>
+                                        <th className="border-b p-2 text-left">Area Size</th>
+                                        <th className="border-b p-2 text-left">Farmer</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {allFields.map((field) => (
+                                        <tr key={field._id}>
+                                            <td className="p-2 border-b text-left">{field.fieldName}</td>
+                                            <td className="p-2 border-b text-left">{field.location}</td>
+                                            <td className="p-2 border-b text-left">{field.cropType}</td>
+                                            <td className="p-2 border-b text-left">
+                                                {field.areaSize} acres
+                                            </td>
+                                            <td className="p-2 border-b text-left">{field.farmerId.username}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     )}
 
                     {/* Pagination */}
