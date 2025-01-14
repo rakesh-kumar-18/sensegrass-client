@@ -100,7 +100,7 @@ const AddEditFieldModal = () => {
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium">Area</label>
+                        <label className="block text-sm font-medium">Area (In acres)</label>
                         <input
                             type="number"
                             name="areaSize"
