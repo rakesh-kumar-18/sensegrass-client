@@ -64,8 +64,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await api.get("/users/validate", { withCredentials: true });
             setUser(response.data.data);
-        } catch (err) {
-            setError(err.response?.data?.message || "Token validation failed");
+        } catch {
             setUser(null);
         } finally {
             setLoading(false);
