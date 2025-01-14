@@ -13,20 +13,20 @@ const UsersTable = () => {
                     {users.length === 0 ? (
                         <p className="text-gray-500">No users found.</p>
                     ) : (
-                        <table className="w-full border-collapse">
+                        <table className="w-full border-collapse table-auto">
                             <thead>
                                 <tr>
-                                    <th className="border-b p-2">Name</th>
-                                    <th className="border-b p-2">Email</th>
-                                    <th className="border-b p-2">Role</th>
+                                    <th className="border-b p-2 text-left">Name</th>
+                                    <th className="border-b p-2 text-left">Email</th>
+                                    <th className="border-b p-2 text-left">Role</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {users.map((user) => (
                                     <tr key={user._id}>
-                                        <td className="p-2">{user.username}</td>
-                                        <td className="p-2">{user.email}</td>
-                                        <td className="p-2">{user.role}</td>
+                                        <td className="p-2 border-b text-left">{user.username}</td>
+                                        <td className="p-2 border-b text-left">{user.email}</td>
+                                        <td className="p-2 border-b text-left">{user.role}</td>
                                     </tr>
                                 ))}
                             </tbody>

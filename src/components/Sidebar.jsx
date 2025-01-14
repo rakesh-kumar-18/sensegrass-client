@@ -9,7 +9,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
     return (
         <div className="w-64 bg-white shadow-md">
-            <div className="p-4 text-green-600 font-bold text-2xl">Agrifuture</div>
+            <div className="p-4 text-green-600 font-bold text-2xl">Sensegrass</div>
             <ul className="space-y-4 p-4">
                 {tabs.map((tab) => (
                     <li

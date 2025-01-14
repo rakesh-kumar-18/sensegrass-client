@@ -16,20 +16,26 @@ const TransactionsTable = () => {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="border-b p-2">Farmer</th>
-                                    <th className="border-b p-2">Amount</th>
-                                    <th className="border-b p-2">Payment ID</th>
-                                    <th className="border-b p-2">Date</th>
-                                    <th className="border-b p-2">Status</th>
+                                    <th className="border-b p-2 text-left">Farmer</th>
+                                    <th className="border-b p-2 text-left">Amount</th>
+                                    <th className="border-b p-2 text-left">Payment ID</th>
+                                    <th className="border-b p-2 text-left">Date</th>
+                                    <th className="border-b p-2 text-left">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {transactions.map((transaction) => (
                                     <tr key={transaction._id}>
-                                        <td className="p-2">{transaction.userId.username}</td>
-                                        <td className="p-2">₹{transaction.amount}</td>
-                                        <td className="p-2">{transaction.paymentId}</td>
-                                        <td className="p-2">
+                                        <td className="p-2 text-left border-b">
+                                            {transaction.userId.username}
+                                        </td>
+                                        <td className="p-2 text-left border-b">
+                                            ₹{transaction.amount}
+                                        </td>
+                                        <td className="p-2 text-left border-b">
+                                            {transaction.paymentId}
+                                        </td>
+                                        <td className="p-2 text-left border-b">
                                             {new Date(transaction.createdAt).toLocaleDateString()}
                                         </td>
                                         <td className="p-2">{transaction.status}</td>

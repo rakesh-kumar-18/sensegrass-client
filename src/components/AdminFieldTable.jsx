@@ -16,21 +16,23 @@ const FieldsTable = () => {
                         <table className="w-full border-collapse">
                             <thead>
                                 <tr>
-                                    <th className="border-b p-2">Field Name</th>
-                                    <th className="border-b p-2">Location</th>
-                                    <th className="border-b p-2">Crop Type</th>
-                                    <th className="border-b p-2">Area Size</th>
-                                    <th className="border-b p-2">Farmer</th>
+                                    <th className="border-b p-2 text-left">Field Name</th>
+                                    <th className="border-b p-2 text-left">Location</th>
+                                    <th className="border-b p-2 text-left">Crop Type</th>
+                                    <th className="border-b p-2 text-left">Area Size</th>
+                                    <th className="border-b p-2 text-left">Farmer</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {allFields.map((field) => (
                                     <tr key={field.id}>
-                                        <td className="p-2">{field.fieldName}</td>
-                                        <td className="p-2">{field.location}</td>
-                                        <td className="p-2">{field.cropType}</td>
-                                        <td className="p-2">{field.areaSize} acres</td>
-                                        <td className="p-2">{field.farmerId.username}</td>
+                                        <td className="p-2 border-b text-left">{field.fieldName}</td>
+                                        <td className="p-2 border-b text-left">{field.location}</td>
+                                        <td className="p-2 border-b text-left">{field.cropType}</td>
+                                        <td className="p-2 border-b text-left">
+                                            {field.areaSize} acres
+                                        </td>
+                                        <td className="p-2 border-b text-left">{field.farmerId.username}</td>
                                     </tr>
                                 ))}
                             </tbody>
