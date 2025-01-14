@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
 
     // Fetch all farmers with pagination
     const fetchFarmers = async (page = 1) => {
+        if (!user) return;
         setUsersLoading(true);
         try {
             const { data } = await api.get(`/users/farmers?page=${page}`);
@@ -76,7 +77,8 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         fetchFarmers(currentPage);
-    }, [currentPage]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, user]);
 
     return (
         <AuthContext.Provider

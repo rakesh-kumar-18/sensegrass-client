@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../api/api";
+import { useAuth } from "./AuthContext";
 
 const FieldContext = createContext();
 
 export const useField = () => useContext(FieldContext);
 
 export const FieldProvider = ({ children }) => {
+    const { user } = useAuth();
     const [fields, setFields] = useState([]);
     const [allFields, setAllFields] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -23,6 +25,7 @@ export const FieldProvider = ({ children }) => {
 
     // Fetch fields by farmer
     const fetchFields = async (page = 1) => {
+        if (!user) return;
         setLoading(true);
         try {
             const response = await api.get(`/fields?page=${page}&limit=${perPage}`);
@@ -37,6 +40,7 @@ export const FieldProvider = ({ children }) => {
 
     // Fetch all fields
     const fetchAllFields = async (page = 1) => {
+        if (!user) return;
         setLoading(true);
         try {
             const response = await api.get(`/fields/all?page=${page}&limit=${perPage}`);
@@ -54,7 +58,7 @@ export const FieldProvider = ({ children }) => {
         fetchFields(currentPage);
         fetchAllFields(currentPage);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [currentPage, user]);
 
     // Add a new field
     const addField = async (fieldData) => {

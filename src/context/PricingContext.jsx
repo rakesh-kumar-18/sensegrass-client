@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../api/api";
+import { useAuth } from "./AuthContext";
 
 const PricingContext = createContext();
 
 export const usePricing = () => useContext(PricingContext);
 
 export const PricingProvider = ({ children }) => {
+    const { user } = useAuth();
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -17,6 +19,7 @@ export const PricingProvider = ({ children }) => {
 
     // Fetch transactions with pagination
     const fetchTransactions = async (page = 1) => {
+        if (!user) return;
         setLoading(true);
         try {
             const { data } = await api.get(`/payments/transactions?page=${page}`);
@@ -32,7 +35,8 @@ export const PricingProvider = ({ children }) => {
 
     useEffect(() => {
         fetchTransactions(currentPage);
-    }, [currentPage]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage, user]);
 
     // Payment initiation
     const initiatePayment = async (plan) => {
