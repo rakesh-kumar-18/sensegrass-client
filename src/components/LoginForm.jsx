@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import FormInput from "./FormInput";
 
 const LoginForm = () => {
-    const { login, loading, error } = useAuth();
+    const { login, loginLoading, error } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({});
@@ -62,9 +62,9 @@ const LoginForm = () => {
             <button
                 type="submit"
                 className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={loading}
+                disabled={loginLoading}
             >
-                {loading ? "Logging in..." : "Log in"}
+                {loginLoading ? "Logging in..." : "Log in"}
             </button>
         </form>
     );

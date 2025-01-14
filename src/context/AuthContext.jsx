@@ -9,6 +9,8 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [signUpLoading, setSignUpLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const [users, setUsers] = useState([]);
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 
     // Login function
     const login = async (email, password) => {
-        setLoading(true);
+        setLoginLoading(true);
         setError(null);
         try {
             const response = await api.post("/users/login", { email, password }, { withCredentials: true });
@@ -27,13 +29,13 @@ export const AuthProvider = ({ children }) => {
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
         } finally {
-            setLoading(false);
+            setLoginLoading(false);
         }
     };
 
     // Signup function
     const signup = async (data) => {
-        setLoading(true);
+        setSignUpLoading(true);
         setError(null);
         try {
             const response = await api.post("/users/register", data, { withCredentials: true });
@@ -41,7 +43,7 @@ export const AuthProvider = ({ children }) => {
         } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
         } finally {
-            setLoading(false);
+            setSignUpLoading(false);
         }
     };
 
@@ -104,6 +106,8 @@ export const AuthProvider = ({ children }) => {
                 signup,
                 logout,
                 loading,
+                loginLoading,
+                signUpLoading,
                 error,
                 users,
                 totalFarmers,

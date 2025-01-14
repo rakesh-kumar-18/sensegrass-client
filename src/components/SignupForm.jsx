@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import FormInput from "./FormInput";
 
 const SignupForm = () => {
-    const { signup, login, loading, error } = useAuth();
+    const { signup, login, signUpLoading, error } = useAuth();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
@@ -110,9 +110,9 @@ const SignupForm = () => {
             <button
                 type="submit"
                 className="w-full py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={loading}
+                disabled={signUpLoading}
             >
-                {loading ? "Signing up..." : "Sign up"}
+                {signUpLoading ? "Signing up..." : "Sign up"}
             </button>
         </form>
     );
