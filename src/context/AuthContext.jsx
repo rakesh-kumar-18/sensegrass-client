@@ -8,7 +8,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const [users, setUsers] = useState([]);
@@ -59,9 +59,25 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // Fetch all farmers with pagination
+    // Validate Token
+    const validateToken = async () => {
+        try {
+            const response = await api.get("/users/validate", { withCredentials: true });
+            setUser(response.data.data);
+        } catch (err) {
+            setError(err.response?.data?.message || "Token validation failed");
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        validateToken();
+    }, []);
+
+    // Fetch all farmers
     const fetchFarmers = async (page = 1) => {
-        if (!user) return;
         setUsersLoading(true);
         try {
             const { data } = await api.get(`/users/farmers?page=${page}`);
@@ -76,8 +92,9 @@ export const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchFarmers(currentPage);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (user) {
+            fetchFarmers(currentPage);
+        }
     }, [currentPage, user]);
 
     return (

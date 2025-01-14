@@ -1,4 +1,5 @@
 import { useField } from "../context/FieldContext";
+import Spinner from "./Spinner";
 
 const FieldTable = () => {
     const { fields, openAddEditModal, openConfirmationModal, loading, currentPage, totalPages, setCurrentPage } = useField();
@@ -6,7 +7,7 @@ const FieldTable = () => {
     return (
         <div className="bg-white shadow-md rounded-lg p-6">
             <h2 className="text-lg font-bold mb-4">Fields</h2>
-            {loading && <p className="text-gray-500">Loading fields...</p>}
+            {loading && <Spinner />}
             {fields.length === 0 && !loading ? (
                 <p className="text-gray-500">No fields available. Add a new field to get started.</p>
             ) : (

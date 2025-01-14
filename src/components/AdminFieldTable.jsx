@@ -1,4 +1,5 @@
 import { useField } from "../context/FieldContext";
+import Spinner from "./Spinner";
 
 const FieldsTable = () => {
     const { allFields, loading, currentPage, totalPages, setCurrentPage } = useField();
@@ -7,7 +8,7 @@ const FieldsTable = () => {
         <div className="bg-white shadow-md p-6 rounded-lg">
             <h2 className="text-lg font-bold mb-4">Fields</h2>
             {loading ? (
-                <p className="text-gray-500">Loading...</p>
+                <Spinner />
             ) : (
                 <>
                     {allFields.length === 0 ? (

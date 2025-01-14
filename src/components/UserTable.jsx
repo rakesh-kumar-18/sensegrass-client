@@ -1,4 +1,5 @@
 import { useAuth } from "../context/AuthContext";
+import Spinner from "./Spinner";
 
 const UsersTable = () => {
     const { users, usersLoading, currentPage, totalPages, setCurrentPage } = useAuth();
@@ -7,7 +8,7 @@ const UsersTable = () => {
         <div className="bg-white shadow-md p-6 rounded-lg">
             <h2 className="text-lg font-bold mb-4">Farmers</h2>
             {usersLoading ? (
-                <p className="text-gray-500">Loading...</p>
+                <Spinner />
             ) : (
                 <>
                     {users.length === 0 ? (

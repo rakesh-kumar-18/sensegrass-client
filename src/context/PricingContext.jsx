@@ -17,7 +17,7 @@ export const PricingProvider = ({ children }) => {
     const [totalPages, setTotalPages] = useState(1);
     const [totalTransactions, setTotalTransactions] = useState(0);
 
-    // Fetch transactions with pagination
+    // Fetch transactions
     const fetchTransactions = async (page = 1) => {
         if (!user) return;
         setLoading(true);

@@ -1,4 +1,5 @@
 import { usePricing } from "../context/PricingContext";
+import Spinner from "./Spinner";
 
 const TransactionsTable = () => {
     const { transactions, currentPage, totalPages, setCurrentPage, loading } = usePricing();
@@ -7,7 +8,7 @@ const TransactionsTable = () => {
         <div className="bg-white shadow-md p-6 rounded-lg">
             <h2 className="text-lg font-bold mb-4">Transactions</h2>
             {loading ? (
-                <p className="text-gray-500">Loading transactions...</p>
+                <Spinner />
             ) : (
                 <>
                     {transactions.length === 0 ? (
