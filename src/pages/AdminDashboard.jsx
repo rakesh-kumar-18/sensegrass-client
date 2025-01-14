@@ -40,7 +40,7 @@ const AdminDashboard = () => {
             <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
             {/* Main Content */}
-            <div className="flex-1 p-6">
+            <div className="flex-1">
                 <header className="bg-white shadow-md p-4 flex justify-between items-center">
                     <h1 className="text-xl font-bold text-gray-700">Admin Dashboard</h1>
                     <div className="relative group">
@@ -67,7 +67,7 @@ const AdminDashboard = () => {
                         )}
                     </div>
                 </header>
-                <main>{renderContent()}</main>
+                <main className="p-6">{renderContent()}</main>
             </div>
 
             {isProfileCardOpen && (
