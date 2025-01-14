@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import api from "../api/api";
 
 const PricingContext = createContext();
@@ -7,9 +7,33 @@ const PricingContext = createContext();
 export const usePricing = () => useContext(PricingContext);
 
 export const PricingProvider = ({ children }) => {
+    const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    // Initiate payment process
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    // Fetch transactions with pagination
+    const fetchTransactions = async (page = 1) => {
+        setLoading(true);
+        try {
+            const { data } = await api.get(`/payments/transactions?page=${page}`);
+            setTransactions(data.transactions);
+            setCurrentPage(data.currentPage);
+            setTotalPages(data.totalPages);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to fetch transactions");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchTransactions(currentPage);
+    }, [currentPage]);
+
+    // Payment initiation
     const initiatePayment = async (plan) => {
         try {
             setLoading(true);
@@ -53,7 +77,18 @@ export const PricingProvider = ({ children }) => {
     };
 
     return (
-        <PricingContext.Provider value={{ initiatePayment, loading }}>
+        <PricingContext.Provider
+            value={{
+                transactions,
+                currentPage,
+                totalPages,
+                setCurrentPage,
+                fetchTransactions,
+                loading,
+                error,
+                initiatePayment,
+            }}
+        >
             {children}
         </PricingContext.Provider>
     );
