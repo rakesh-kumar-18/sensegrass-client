@@ -89,7 +89,7 @@ const AdminDashboard = () => {
                 </header>
                 <main className="p-6">{renderContent()}</main>
             </div>
-            
+
             {isProfileCardOpen && (
                 <div
                     className="fixed inset-0 bg-transparent"
