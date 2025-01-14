@@ -32,10 +32,10 @@ const PricingPage = () => {
                         </p>
                         <button
                             onClick={() => handlePayment(plan)}
-                            className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
+                            className="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={loading}
                         >
-                            {loading ? "Processing..." : "Subscribe"}
+                            Subscribe
                         </button>
                     </div>
                 ))}

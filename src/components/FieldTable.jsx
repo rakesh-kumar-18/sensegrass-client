@@ -1,7 +1,7 @@
 import { useField } from "../context/FieldContext";
 
 const FieldTable = () => {
-    const { fields, openAddEditModal, openConfirmationModal, loading } = useField();
+    const { fields, openAddEditModal, openConfirmationModal, loading, currentPage, totalPages, setCurrentPage } = useField();
 
     return (
         <div className="bg-white shadow-md rounded-lg p-6">
@@ -48,6 +48,27 @@ const FieldTable = () => {
                     </table>
                 </div>
             )}
+
+            {/* Pagination */}
+            <div className="flex justify-between items-center mt-4">
+                <button
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    className="mr-2 bg-gray-300 px-3 py-1 rounded-md disabled:opacity-50"
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <p className="text-gray-700">
+                    Page {currentPage} of {totalPages}
+                </p>
+                <button
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    className="bg-gray-300 px-3 py-1 rounded-md disabled:opacity-50"
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };

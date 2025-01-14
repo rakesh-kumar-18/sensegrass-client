@@ -25,7 +25,7 @@ const FieldsTable = () => {
                             </thead>
                             <tbody>
                                 {allFields.map((field) => (
-                                    <tr key={field.id}>
+                                    <tr key={field._id}>
                                         <td className="p-2 border-b text-left">{field.fieldName}</td>
                                         <td className="p-2 border-b text-left">{field.location}</td>
                                         <td className="p-2 border-b text-left">{field.cropType}</td>

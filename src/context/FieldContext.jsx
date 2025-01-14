@@ -27,7 +27,6 @@ export const FieldProvider = ({ children }) => {
         try {
             const response = await api.get(`/fields?page=${page}&limit=${perPage}`);
             setFields(response.data.fields);
-            setTotalFields(response.data.totalFields);
             setTotalPages(response.data.totalPages);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to fetch fields");
