@@ -13,6 +13,7 @@ export const PricingProvider = ({ children }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalTransactions, setTotalTransactions] = useState(0);
 
     // Fetch transactions with pagination
     const fetchTransactions = async (page = 1) => {
@@ -20,7 +21,7 @@ export const PricingProvider = ({ children }) => {
         try {
             const { data } = await api.get(`/payments/transactions?page=${page}`);
             setTransactions(data.transactions);
-            setCurrentPage(data.currentPage);
+            setTotalTransactions(data.totalTransactions);
             setTotalPages(data.totalPages);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to fetch transactions");
@@ -80,6 +81,7 @@ export const PricingProvider = ({ children }) => {
         <PricingContext.Provider
             value={{
                 transactions,
+                totalTransactions,
                 currentPage,
                 totalPages,
                 setCurrentPage,

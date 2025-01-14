@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     const [users, setUsers] = useState([]);
+    const [totalFarmers, setTotalFarmers] = useState(0);
     const [usersLoading, setUsersLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await api.get(`/users/farmers?page=${page}`);
             setUsers(data.farmers);
-            setCurrentPage(data.currentPage);
+            setTotalFarmers(data.totalFarmers);
             setTotalPages(data.totalPages);
         } catch (err) {
             setError(err.response?.data?.message || "Failed to fetch farmers");
@@ -87,6 +88,7 @@ export const AuthProvider = ({ children }) => {
                 loading,
                 error,
                 users,
+                totalFarmers,
                 usersLoading,
                 currentPage,
                 totalPages,
