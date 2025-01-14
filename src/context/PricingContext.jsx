@@ -61,7 +61,7 @@ export const PricingProvider = ({ children }) => {
                         signature: response.razorpay_signature,
                         amount: data.amount / 100,
                     });
-                    alert("Payment Successful!");
+                    window.location.href = '/dashboard';
                 },
                 prefill: {
                     name: data.prefill.name,
