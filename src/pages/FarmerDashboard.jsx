@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useField } from "../context/FieldContext";
 import { useAuth } from "../context/AuthContext";
 import FieldTable from "../components/FieldTable";
@@ -8,6 +9,7 @@ import ConfirmationModal from "../components/ConfirmationModal";
 const FarmerDashboard = () => {
     const { openAddEditModal } = useField();
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
     const [isProfileCardOpen, setProfileCardOpen] = useState(false);
 
     const toggleProfileCard = () => {
@@ -26,7 +28,7 @@ const FarmerDashboard = () => {
                 <div className="flex items-center space-x-4 relative">
                     <button
                         className="text-green-600 font-medium hover:underline"
-                        onClick={() => (window.location.href = "/pricing")}
+                        onClick={() => navigate("/pricing")}
                     >
                         Pricing
                     </button>
