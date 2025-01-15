@@ -5,6 +5,7 @@ import Dashboard from "../components/Dashboard";
 import UsersTable from "../components/UserTable";
 import FieldsTable from "../components/AdminFieldTable";
 import TransactionsTable from "../components/TransactionsTable";
+import FieldVisualization from "../components/FieldVisualization";
 
 const AdminDashboard = () => {
     const { user, logout } = useAuth();
@@ -19,7 +20,12 @@ const AdminDashboard = () => {
     const renderContent = () => {
         switch (activeTab) {
             case "dashboard":
-                return <Dashboard />;
+                return (
+                    <>
+                        <Dashboard />
+                        <FieldVisualization />
+                    </>
+                );
             case "users":
                 return <UsersTable />;
             case "fields":
@@ -41,7 +47,6 @@ const AdminDashboard = () => {
                 toggleSidebar={toggleSidebar}
             />
 
-            {/* Overlay for Sidebar on small screens */}
             {isSidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
