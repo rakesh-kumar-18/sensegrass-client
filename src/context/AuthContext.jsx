@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
         setLoginLoading(true);
         setError(null);
         try {
-            const response = await api.post("/users/login", { email, password }, { withCredentials: true });
+            const response = await api.post("/users/login", { email, password });
             setUser(response.data.data.loggedInUser);
         } catch (err) {
             setError(err.response?.data?.message || "Login failed");
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }) => {
         setSignUpLoading(true);
         setError(null);
         try {
-            const response = await api.post("/users/register", data, { withCredentials: true });
-            setUser(response.data);
+            const response = await api.post("/users/register", data);
+            setUser(response.data.data);
         } catch (err) {
             setError(err.response?.data?.message || "Signup failed");
         } finally {
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            await api.post("/users/logout", {}, { withCredentials: true });
+            await api.post("/users/logout", {});
             setUser(null);
         } catch (err) {
             setError(err.response?.data?.message || "Logout failed");
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     // Validate Token
     const validateToken = async () => {
         try {
-            const response = await api.get("/users/validate", { withCredentials: true });
+            const response = await api.get("/users/validate");
             setUser(response.data.data);
         } catch {
             setUser(null);
